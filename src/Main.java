@@ -1,19 +1,41 @@
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
+
+import exceptions.IdadeIncompativel;
+import exceptions.LimiteModalidades;
+import exceptions.VagaIndisponivel;
 import model.Aluno;
+import model.Inscricao;
+import model.Modalidade;
+import model.Turma;
 import service.AlunoCSV;
+import service.InscricaoService;
 
 public class Main {
 
     static Scanner leia = new Scanner(System.in);
     static List<Aluno> alunos;
+    static List<Turma>      turmas     = new ArrayList<>();
+    static List<Inscricao>  inscricoes = new ArrayList<>();
+    static InscricaoService inscricaoService = new InscricaoService();
 
     public static void main(String[] args) {
         alunos = AlunoCSV.carregar();
-
+        popularDadosDemo(); //Teste para criação de turmas manualmente
         menuEntrada();
+    }
+
+    static void popularDadosDemo() {
+        Modalidade natacao  = new Modalidade("Natação",   5, 60, 3);
+        Modalidade futebol  = new Modalidade("Futebol",  10, 40, 3);
+        Modalidade ginastica = new Modalidade("Ginástica", 6, 30, 3);
+
+        turmas.add(new Turma("Natação Manhã",    natacao,   "08:00", 2));
+        turmas.add(new Turma("Futebol Tarde",    futebol,   "15:00", 10));
+        turmas.add(new Turma("Ginástica Manhã",  ginastica, "09:00", 10));
     }
 
     static void menuEntrada() {
@@ -138,14 +160,59 @@ System.out.println("CPF ou senha invalidos!");
         );
 
 
-    alunos.add(novoAluno);
-    AlunoCSV.salvar(novoAluno);
+        alunos.add(novoAluno);
+        AlunoCSV.salvar(novoAluno);
 
         System.out.println("Cadastro realizado com sucesso! Bem-vindo, " + nome + "!");
         novoAluno.exibirPerfil();
     }
 
-    // RN016: verifica se CPF j? existe na lista de alunos
+    static void realizarInscricao(Aluno aluno) {
+        if (turmas.isEmpty()) {
+            System.out.println("Nenhuma turma disponível no momento.");
+            return;
+        }
+
+        System.out.println("\n===== TURMAS DISPONÍVEIS =====");
+        for (int i = 0; i < turmas.size(); i++) {
+            Turma t = turmas.get(i);
+            System.out.printf("[%d] %s | %s | Horário: %s | Vagas: %d/%d%n",
+                i + 1,
+                t.getNome(),
+                t.getModalidade().getNome(),
+                t.getHorario(),
+                t.getAlunosInscritos().size(),
+                t.getLimiteAlunos()
+            );
+        }
+
+        System.out.print("Escolha o número da turma: ");
+        int escolha = leia.nextInt();
+        leia.nextLine();
+
+        if (escolha < 1 || escolha > turmas.size()) {
+            System.out.println("Opção inválida.");
+            return;
+        }
+
+        Turma turmaSelecionada = turmas.get(escolha - 1);
+
+        try {
+            Inscricao inscricao = inscricaoService.realizarInscricao(aluno, turmaSelecionada);
+            inscricoes.add(inscricao);
+            System.out.println("Inscrição realizada com sucesso!");
+
+        } catch (LimiteModalidades e) {
+            System.out.println("ERRO: " + e.getMessage());
+
+        } catch (IdadeIncompativel e) {
+            System.out.println("ERRO: " + e.getMessage());
+
+        } catch (VagaIndisponivel e) {
+            System.out.println("AVISO: " + e.getMessage());
+        }
+    }
+
     static boolean cpfJaExiste(String cpf) {
     cpf = cpf.trim();
 
@@ -184,9 +251,8 @@ System.out.println("CPF ou senha invalidos!");
                 case 2:
                     System.out.println("(funcionalidade a implementar)");
                     break;
-
                 case 3:
-                    System.out.println("(funcionalidade a implementar)");
+                    realizarInscricao(aluno);
                     break;
 
                 case 4:
