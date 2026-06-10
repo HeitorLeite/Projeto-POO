@@ -7,6 +7,7 @@ import java.util.Scanner;
 import exceptions.IdadeIncompativel;
 import exceptions.LimiteModalidades;
 import exceptions.VagaIndisponivel;
+import model.Administrador;
 import model.Aluno;
 import model.Inscricao;
 import model.Modalidade;
@@ -21,6 +22,7 @@ public class Main {
     static List<Turma>      turmas     = new ArrayList<>();
     static List<Inscricao>  inscricoes = new ArrayList<>();
     static InscricaoService inscricaoService = new InscricaoService();
+    static List<Administrador> administradores = new ArrayList<>();
 
     public static void main(String[] args) {
         alunos = AlunoCSV.carregar();
@@ -86,6 +88,16 @@ public class Main {
             menuAluno(a);
             return;
         }
+        for (Administrador admin : administradores) {
+
+        if (admin.getCpf().equals(cpf)
+            && admin.getSenha().equals(senha)) {
+
+        System.out.println("Login de administrador realizado!");
+        menuAdministrador(admin);
+        return;
+    }
+}
 }
 
 System.out.println("CPF ou senha invalidos!"); 
@@ -225,6 +237,7 @@ System.out.println("CPF ou senha invalidos!");
 }
         static void menuAluno(Aluno aluno) {
 
+
         int opcao = -1;
 
         while (opcao != 0) {
@@ -269,6 +282,50 @@ System.out.println("CPF ou senha invalidos!");
 
                 default:
                     System.out.println("Op??o inv?lida!");
+            }
+        }
+    }
+    static void menuAdministrador(Administrador admin) {
+
+    int opcao = -1;
+
+    while (opcao != 0) {
+
+        System.out.println("\n===== MENU ADMINISTRADOR =====");
+        System.out.println("Logado: " + admin.getNome());
+        System.out.println("1. Ver perfil");
+        System.out.println("2. Listar alunos");
+        System.out.println("0. Logout");
+        System.out.print("Escolha: ");
+
+        opcao = leia.nextInt();
+        leia.nextLine();
+
+        switch (opcao) {
+
+            case 1:
+                admin.exibirPerfil();
+                break;
+
+            case 2:
+
+                if (alunos.isEmpty()) {
+                    System.out.println("Nenhum aluno cadastrado.");
+                } else {
+
+                    for (Aluno a : alunos) {
+                        a.exibirPerfil();
+                    }
+                }
+
+                break;
+
+            case 0:
+                System.out.println("Logout realizado.");
+                break;
+
+            default:
+                System.out.println("Opção inválida.");
             }
         }
     }
