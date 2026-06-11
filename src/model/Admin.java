@@ -5,13 +5,14 @@ import java.time.LocalDate;
 import java.time.Period;
 
 public class Admin extends Usuario implements Persistivel {
-    
+
     private LocalDate dataNascimento;
     private String setor;
     private byte permissao;
 
-    public Admin(String nome, String cpf, String email, String telefone, String senha, LocalDate dataNascimento, String setor, byte permissao) {
-        super( nome, cpf, email, telefone, senha);
+    public Admin(String nome, String cpf, String email, String telefone, String senha, LocalDate dataNascimento,
+            String setor, byte permissao) {
+        super(nome, cpf, email, telefone, senha);
 
         this.dataNascimento = dataNascimento;
         this.setor = setor;
@@ -29,7 +30,7 @@ public class Admin extends Usuario implements Persistivel {
         System.out.println("Permissao  : " + getPermissao());
         System.out.println("====================================");
 
-        if (permissao == 0){
+        if (permissao == 0) {
             System.out.println("Você não tem permissão para acessar as funcionalidades administrativas.");
             return;
         }
@@ -37,7 +38,9 @@ public class Admin extends Usuario implements Persistivel {
         System.out.println("======================================");
     }
 
-    public LocalDate getDataNascimento() { return dataNascimento; }
+    public LocalDate getDataNascimento() {
+        return dataNascimento;
+    }
 
     public int getIdade() {
         return Period.between(dataNascimento, LocalDate.now()).getYears();
@@ -51,21 +54,21 @@ public class Admin extends Usuario implements Persistivel {
         return permissao;
     }
 
-
     @Override
     public String paraCSV() {
-        return getNome() + "," 
-             + getCpf() + "," 
-             + getEmail() + "," 
-             + getTelefone() + "," 
-             + getSenha() + "," 
-             + dataNascimento + "," 
-             + setor + "," 
-             + permissao;
+        return getNome() + ","
+                + getCpf() + ","
+                + getEmail() + ","
+                + getTelefone() + ","
+                + getSenha() + ","
+                + "ADMIN" + ","
+                + dataNascimento + ","
+                + setor + ","
+                + permissao;
     }
 
     @Override
-    public String getCabecalhoCSV(){
-        return "nome,cpf,email,telefone,senha,dataNascimento,setor,permissao";
+    public String getCabecalhoCSV() {
+        return "nome,cpf,email,telefone,senha,tipo,dataNascimento,setor,permissao";
     }
 }

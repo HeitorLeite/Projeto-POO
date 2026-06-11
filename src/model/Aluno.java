@@ -7,26 +7,26 @@ import java.time.Period;
 public class Aluno extends Usuario implements Persistivel {
 
     private LocalDate dataNascimento;
-    private String    responsavelNome;
-    private String    responsavelTelefone;
-    private int       totalInscricoes;
+    private String responsavelNome;
+    private String responsavelTelefone;
+    private int totalInscricoes;
 
-     public Aluno(String nome, String cpf, String email, String telefone, String senha,
-                 LocalDate dataNascimento, String responsavelNome,
-                 String responsavelTelefone) {
+    public Aluno(String nome, String cpf, String email, String telefone, String senha,
+            LocalDate dataNascimento, String responsavelNome,
+            String responsavelTelefone) {
 
         super(nome, cpf, email, telefone, senha);
 
-        this.dataNascimento      = dataNascimento;
-        this.responsavelNome     = responsavelNome;
+        this.dataNascimento = dataNascimento;
+        this.responsavelNome = responsavelNome;
         this.responsavelTelefone = responsavelTelefone;
-        this.totalInscricoes     = 0;
+        this.totalInscricoes = 0;
     }
 
-     @Override
-     public void exibirPerfil() {
+    @Override
+    public void exibirPerfil() {
         System.out.println("\n========== PERFIL DO ALUNO ==========");
-        System.out.println("Nome        : " + getNome()); 
+        System.out.println("Nome        : " + getNome());
         System.out.println("CPF         : " + getCpf());
         System.out.println("Email       : " + getEmail());
         System.out.println("Idade       : " + getIdade() + " anos");
@@ -46,7 +46,8 @@ public class Aluno extends Usuario implements Persistivel {
         super.notificar(mensagem);
 
         if (ehMenorDeIdade() && !responsavelTelefone.isEmpty()) {
-            System.out.println("[AVISO AO RESPONSAVEL - " + responsavelNome + " | " + responsavelTelefone + "] " + mensagem);
+            System.out.println(
+                    "[AVISO AO RESPONSAVEL - " + responsavelNome + " | " + responsavelTelefone + "] " + mensagem);
         }
     }
 
@@ -76,23 +77,35 @@ public class Aluno extends Usuario implements Persistivel {
     @Override
     public String paraCSV() {
         return getNome() + ","
-             + getCpf() + ","
-             + getEmail() + ","
-             + getSenha() + ","
-             + "ALUNO" + ","
-             + dataNascimento + ","
-             + responsavelNome + ","
-             + responsavelTelefone;
+                + getCpf() + ","
+                + getEmail() + ","
+                + getTelefone() + ","
+                + getSenha() + ","
+                + "ALUNO" + ","
+                + dataNascimento + ","
+                + responsavelNome + ","
+                + responsavelTelefone;
     }
 
     @Override
     public String getCabecalhoCSV() {
-        return "nome,cpf,email,senha,tipo,dataNascimento,responsavelNome,responsavelTelefone";
+        return "nome,cpf,email,telefone,senha,tipo,dataNascimento,responsavelNome,responsavelTelefone";
     }
 
-    public LocalDate getDataNascimento()      { return dataNascimento; }
-    public String    getResponsavelNome()     { return responsavelNome; }
-    public String    getResponsavelTelefone() { return responsavelTelefone; }
-    public int       getTotalInscricoes()     { return totalInscricoes; }
+    public LocalDate getDataNascimento() {
+        return dataNascimento;
+    }
+
+    public String getResponsavelNome() {
+        return responsavelNome;
+    }
+
+    public String getResponsavelTelefone() {
+        return responsavelTelefone;
+    }
+
+    public int getTotalInscricoes() {
+        return totalInscricoes;
+    }
 
 }

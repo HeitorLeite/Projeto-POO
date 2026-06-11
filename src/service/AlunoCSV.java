@@ -21,50 +21,51 @@ public class AlunoCSV {
 
     public static List<Aluno> carregar() {
 
-    List<Aluno> alunos = new ArrayList<>();
+        List<Aluno> alunos = new ArrayList<>();
 
-    try (BufferedReader br = new BufferedReader(new FileReader(ARQUIVO))) {
+        try (BufferedReader br = new BufferedReader(new FileReader(ARQUIVO))) {
 
-        String linha;
+            String linha;
 
-        while ((linha = br.readLine()) != null) {
+            while ((linha = br.readLine()) != null) {
 
-            if (linha.trim().isEmpty()) continue;
+                if (linha.trim().isEmpty())
+                    continue;
 
-            String[] dados = linha.split(",");
+                String[] dados = linha.split(",");
 
-            if (dados.length < 6) {
-                System.out.println("Linha inv?lida ignorada: " + linha);
-                continue;
+                if (dados.length < 6) {
+                    System.out.println("Linha inv?lida ignorada: " + linha);
+                    continue;
+                }
+
+                String nome = dados[0];
+                String cpf = dados[1];
+                String email = dados[2];
+                String telefone = dados[3]; // não foi salvo no CSV
+                String senha = dados[4];
+                // dados[4] é "ALUNO" — ignorado
+                LocalDate dataNascimento = LocalDate.parse(dados[6]);
+                String responsavelNome = dados.length > 6 ? dados[7] : "";
+                String responsavelTelefone = dados.length > 7 ? dados[8] : "";
+
+                Aluno aluno = new Aluno(
+                        nome,
+                        cpf,
+                        email,
+                        telefone,
+                        senha,
+                        dataNascimento,
+                        responsavelNome,
+                        responsavelTelefone);
+
+                alunos.add(aluno);
             }
 
-            String nome = dados[0];
-            String cpf = dados[1];
-            String email = dados[2];
-            String telefone = dados.length > 3 ? dados[3] : "";
-            String senha = dados[4];
-            LocalDate dataNascimento = LocalDate.parse(dados[5]);
-            String responsavelNome = dados.length > 6 ? dados[6] : "";
-            String responsavelTelefone = dados.length > 7 ? dados[7] : "";
-
-            Aluno aluno = new Aluno(
-                nome,
-                cpf,
-                email,
-                telefone,
-                senha,
-                dataNascimento,
-                responsavelNome,
-                responsavelTelefone
-            );
-
-            alunos.add(aluno);
+        } catch (IOException e) {
+            System.out.println("Arquivo CSV ainda n?o existe.");
         }
 
-    } catch (IOException e) {
-        System.out.println("Arquivo CSV ainda n?o existe.");
+        return alunos;
     }
-
-    return alunos;
-}
 }
