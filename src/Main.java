@@ -343,6 +343,54 @@ public class Main {
 
         professores.add(novoProfessor);
         ProfessorCSV.salvar(novoProfessor);
+
+        System.out.println("Cadastro de professor realizado com sucesso! Bem-vindo, " + nome + "!");
+        novoProfessor.exibirPerfil();
+    }
+
+    static void criarTurma() {
+        System.out.println("-------------- CRIAR TURMA --------------");
+
+        if (modalidades.isEmpty()) {
+            System.out.println("Nenhuma modalidade cadastrada. Cadastre uma modalidade antes de criar uma turma.");
+            return;
+        }
+
+        System.out.print("Digite o nome da turma: ");
+        String nome = leia.nextLine();
+
+        System.out.println("\nModalidades disponiveis:");
+        for (int i = 0; i < modalidades.size(); i++) {
+            Modalidade m = modalidades.get(i);
+            System.out.printf("[%d] %s (faixa etaria: %d a %d anos)%n",
+                    i + 1, m.getNome(), m.getIdadeMinima(), m.getIdadeMaxima());
+        }
+
+        int escolha = -1;
+        while (escolha < 1 || escolha > modalidades.size()) {
+            System.out.print("Escolha o numero da modalidade: ");
+            escolha = leia.nextInt();
+            leia.nextLine();
+
+            if (escolha < 1 || escolha > modalidades.size()) {
+                System.out.println("Opcao invalida! Tente novamente.");
+            }
+        }
+
+        Modalidade modalidadeSelecionada = modalidades.get(escolha - 1);
+
+        System.out.print("Digite o horario da turma (ex: seg/qua 18h): ");
+        String horario = leia.nextLine();
+
+        System.out.print("Digite o limite de alunos: ");
+        int limiteAlunos = leia.nextInt();
+        leia.nextLine();
+
+        Turma novaTurma = new Turma(nome, modalidadeSelecionada, horario, limiteAlunos);
+
+        turmas.add(novaTurma);
+
+        System.out.println("Turma criada com sucesso!");
     }
 
     static void verModalidades() {
@@ -572,7 +620,7 @@ public class Main {
                     break;
 
                 case 4:
-                    System.out.println("(funcionalidade a implementar)");
+                    criarTurma();
                     break;
 
                 case 5:
@@ -603,7 +651,49 @@ public class Main {
         }
     }
 
-    static void menuProfessor(Professor professor) {
-        System.out.println("Funcionalidade de professor a implementar...");
+  static void menuProfessor(Professor professor) {
+
+        int opcao = -1;
+
+        while (opcao != 0) {
+
+            System.out.println("\n===== MENU PROFESSOR =====");
+            System.out.println("Logado: " + professor.getNome());
+            System.out.println("1. Ver perfil");
+            System.out.println("2. Ver minhas turmas");
+            System.out.println("3. Ver alunos de uma turma");
+            System.out.println("4. Registrar falta");
+            System.out.println("0. Logout");
+            System.out.print("Escolha: ");
+
+            opcao = leia.nextInt();
+            leia.nextLine();
+
+            switch (opcao) {
+
+                case 1:
+                    professor.exibirPerfil();
+                    break;
+
+                case 2:
+                    // verTurmasProfessor(professor);
+                    break;
+
+                case 3:
+                    // verAlunosDaTurma(professor);
+                    break;
+
+                case 4:
+                    // registrarFaltaProfessor(professor);
+                    break;
+
+                case 0:
+                    System.out.println("Logout realizado. Ate logo, " + professor.getNome() + "!");
+                    break;
+
+                default:
+                    System.out.println("Opcao invalida.");
+            }
+        }
     }
 }
