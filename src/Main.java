@@ -11,10 +11,12 @@ import model.Admin;
 import model.Aluno;
 import model.Inscricao;
 import model.Modalidade;
+import model.Professor;
 import model.Turma;
 import service.AdminCSV;
 import service.AlunoCSV;
 import service.InscricaoService;
+import service.ProfessorCSV;
 
 public class Main {
 
@@ -24,10 +26,12 @@ public class Main {
     static List<Inscricao> inscricoes = new ArrayList<>();
     static InscricaoService inscricaoService = new InscricaoService();
     static List<Admin> administradores = new ArrayList<>();
+    static List<Professor> professores = new ArrayList<>();
 
     public static void main(String[] args) {
         alunos = AlunoCSV.carregar();
         administradores = AdminCSV.carregar();
+        professores = ProfessorCSV.carregar();
         popularDadosDemo();
         menuEntrada();
     }
@@ -46,13 +50,12 @@ public class Main {
 
         int opcao = -1;
 
-        while (opcao != 4) {
+        while (opcao != 0) {
 
             System.out.println("-------------- SEJA BEM-VINDO! --------------");
             System.out.println("1. Fazer login");
             System.out.println("2. Cadastrar-se");
-            System.out.println("3. Cadastrar administrador");
-            System.out.println("4. Sair");
+            System.out.println("0. Sair");
             System.out.print("Escolha uma opcao: ");
             opcao = leia.nextInt();
             leia.nextLine();
@@ -67,9 +70,6 @@ public class Main {
                     break;
 
                 case 3:
-                    cadastroAdmin();
-                    break;
-                case 4:
                     System.out.println("Saindo... Tenha um bom dia!");
                     break;
 
@@ -258,6 +258,70 @@ public class Main {
         novoAdmin.exibirPerfil();
     }
 
+    static void cadastroProfessor() {
+        System.out.println("-------------- CADASTRO DE PROFESSOR --------------");
+
+        System.out.print("Digite o nome completo do professor: ");
+        String nome = leia.nextLine();
+
+        System.out.print("Digite a data de nascimento do professor (dd-MM-yyyy): ");
+        String data = leia.nextLine();
+        LocalDate dataNascimento;
+
+        DateTimeFormatter formato = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+
+        try {
+            dataNascimento = LocalDate.parse(data, formato);
+        } catch (Exception erro) {
+            System.out.println("Formato errado!");
+            System.out.println("Usando data padrao (hoje).");
+            dataNascimento = LocalDate.now();
+        }
+
+        String cpf = "";
+
+        while (true) {
+            System.out.print("Digite o CPF do professor: ");
+            cpf = leia.nextLine().trim();
+
+            if (cpf.isEmpty()) {
+                System.out.println("CPF nao pode ser vazio!");
+                continue;
+            }
+
+            if (cpfJaExiste(cpf)) {
+                System.out.println("Erro: esse CPF ja esta cadastrado! Digite outro.");
+                continue;
+            }
+
+            break;
+        }
+
+        System.out.print("Digite o telefone do professor: ");
+        String telefone = leia.nextLine();
+
+        System.out.print("Digite o email do professor: ");
+        String email = leia.nextLine();
+
+        System.out.print("Digite a senha do professor: ");
+        String senha = leia.nextLine();
+
+        System.out.print("Digite a especialidade do professor: ");
+        String especialidade = leia.nextLine();
+
+        Professor novoProfessor = new Professor(
+                nome,
+                cpf,
+                email,
+                telefone,
+                senha,
+                dataNascimento,
+                especialidade);
+
+        professores.add(novoProfessor);
+        ProfessorCSV.salvar(novoProfessor);
+    }
+
     static void verModalidades() {
         System.out.println("\n===== MODALIDADES DISPONÍVEIS =====");
         if (turmas.isEmpty()) {
@@ -432,6 +496,9 @@ public class Main {
             System.out.println("2. Listar alunos");
             System.out.println("3. Cadastrar professor");
             System.out.println("4. Criar turma");
+            System.out.println("5. Cadastrar novo administrador");
+            System.out.println("6. Cadastrar nova modalidade");
+            System.out.println("7. Listar professores");
             System.out.println("0. Logout");
             System.out.print("Escolha: ");
 
@@ -458,11 +525,29 @@ public class Main {
                     break;
 
                 case 3:
-                    System.out.println("(funcionalidade a implementar)");
+                    cadastroProfessor();
                     break;
 
                 case 4:
                     System.out.println("(funcionalidade a implementar)");
+                    break;
+
+                case 5:
+                    cadastroAdmin();
+                    break;
+
+                case 6:
+                    System.out.println("(funcionalidade a implementar)");
+                    break;
+
+                case 7:
+                    if (professores.isEmpty()) {
+                        System.out.println("Nenhum professor cadastrado.");
+                    } else {
+                        for (Professor p : professores) {
+                            p.exibirPerfil();
+                        }
+                    }
                     break;
 
                 case 0:
