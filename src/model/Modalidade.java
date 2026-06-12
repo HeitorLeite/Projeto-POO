@@ -1,6 +1,8 @@
 package model;
 
-public class Modalidade {
+import interfaces.Persistivel;
+
+public class Modalidade implements Persistivel {
     private String nome;
     private int idadeMinima;
     private int idadeMaxima;
@@ -53,4 +55,17 @@ public class Modalidade {
         return ativo;
     }
 
+    @Override
+    public String paraCSV() {
+        return nome + ","
+                + idadeMinima + ","
+                + idadeMaxima + ","
+                + limiteFaltasMensais + ","
+                + ativo;
+    }
+
+    @Override
+    public String getCabecalhoCSV() {
+        return "nome,idadeMinima,idadeMaxima,limiteFaltasMensais,ativo";
+    }
 }

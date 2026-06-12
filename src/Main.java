@@ -16,12 +16,14 @@ import model.Turma;
 import service.AdminCSV;
 import service.AlunoCSV;
 import service.InscricaoService;
+import service.ModalidadeCSV;
 import service.ProfessorCSV;
 
 public class Main {
 
     static Scanner leia = new Scanner(System.in);
     static List<Aluno> alunos;
+    static List<Modalidade> modalidades = new ArrayList<>();
     static List<Turma> turmas = new ArrayList<>();
     static List<Inscricao> inscricoes = new ArrayList<>();
     static InscricaoService inscricaoService = new InscricaoService();
@@ -32,18 +34,8 @@ public class Main {
         alunos = AlunoCSV.carregar();
         administradores = AdminCSV.carregar();
         professores = ProfessorCSV.carregar();
-        popularDadosDemo();
+        modalidades = ModalidadeCSV.carregar();
         menuEntrada();
-    }
-
-    static void popularDadosDemo() {
-        Modalidade natacao = new Modalidade("Natação", 5, 60, 3);
-        Modalidade futebol = new Modalidade("Futebol", 10, 40, 3);
-        Modalidade ginastica = new Modalidade("Ginástica", 6, 30, 3);
-
-        turmas.add(new Turma("Natação Manhã", natacao, "08:00", 2));
-        turmas.add(new Turma("Futebol Tarde", futebol, "15:00", 10));
-        turmas.add(new Turma("Ginástica Manhã", ginastica, "09:00", 10));
     }
 
     static void menuEntrada() {
@@ -74,7 +66,7 @@ public class Main {
                     break;
 
                 default:
-                    System.out.println("Opcao invalida! Digite 1, 2, 3 ou 4.");
+                    System.out.println("Opcao invalida! Digite 1, 2, 3 ou 0.");
             }
         }
     }
@@ -314,8 +306,31 @@ public class Main {
         System.out.print("Digite a senha do professor: ");
         String senha = leia.nextLine();
 
-        System.out.print("Digite a modalidade do professor: ");
-        String modalidade = leia.nextLine();
+        if (modalidades.isEmpty()) {
+            System.out
+                    .println("Nenhuma modalidade cadastrada. Cadastre uma modalidade antes de registrar um professor.");
+            return;
+        }
+
+        System.out.println("\nModalidades disponíveis:");
+        for (int i = 0; i < modalidades.size(); i++) {
+            Modalidade m = modalidades.get(i);
+            System.out.printf("[%d] %s (faixa etária: %d a %d anos)%n",
+                    i + 1, m.getNome(), m.getIdadeMinima(), m.getIdadeMaxima());
+        }
+
+        int escolha = -1;
+        while (escolha < 1 || escolha > modalidades.size()) {
+            System.out.print("Escolha o número da modalidade: ");
+            escolha = leia.nextInt();
+            leia.nextLine();
+
+            if (escolha < 1 || escolha > modalidades.size()) {
+                System.out.println("Opção inválida! Tente novamente.");
+            }
+        }
+
+        String modalidade = modalidades.get(escolha - 1).getNome();
 
         Professor novoProfessor = new Professor(
                 nome,
@@ -442,6 +457,26 @@ public class Main {
         return false;
     }
 
+    static void cadastroModalidade() {
+        System.out.println("-------------- CADASTRO DE MODALIDADE --------------");
+        System.out.print("Digite o nome da modalidade: ");
+        String nome = leia.nextLine();
+
+        System.out.print("Digite a idade mínima: ");
+        int idadeMinima = leia.nextInt();
+
+        System.out.print("Digite a idade máxima: ");
+        int idadeMaxima = leia.nextInt();
+
+        System.out.print("Digite o limite de faltas mensais: ");
+        int limiteFaltas = leia.nextInt();
+
+        Modalidade novaModalidade = new Modalidade(nome, idadeMinima, idadeMaxima, limiteFaltas);
+
+        modalidades.add(novaModalidade);
+        ModalidadeCSV.salvar(novaModalidade);
+    }
+
     static void menuAluno(Aluno aluno) {
 
         int opcao = -1;
@@ -545,7 +580,7 @@ public class Main {
                     break;
 
                 case 6:
-                    System.out.println("(funcionalidade a implementar)");
+                    cadastroModalidade();
                     break;
 
                 case 7:
