@@ -41,7 +41,7 @@ public class ProfessorCSV {
                 String telefone = dados.length > 3 ? dados[3] : "";
                 String senha = dados[4];
                 LocalDate dataNascimento = LocalDate.parse(dados[6]);
-                String especialidade = dados.length > 6 ? dados[7] : "";
+                String modalidade = dados.length > 6 ? dados[7] : "";
 
                 Professor novoProfessor = new Professor(
                         nome,
@@ -50,7 +50,7 @@ public class ProfessorCSV {
                         telefone,
                         senha,
                         dataNascimento,
-                        especialidade);
+                        modalidade);
 
                 professores.add(novoProfessor);
             }

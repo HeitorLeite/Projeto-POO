@@ -103,6 +103,14 @@ public class Main {
                 return;
             }
         }
+
+        for (Professor p : professores) {
+            if (p.getCpf().equals(cpf) && p.getSenha().equals(senha)) {
+                System.out.println("Login de professor realizado!");
+                menuProfessor(p);
+                return;
+            }
+        }
         System.out.println("CPF ou senha invalidos!");
     }
 
@@ -306,8 +314,8 @@ public class Main {
         System.out.print("Digite a senha do professor: ");
         String senha = leia.nextLine();
 
-        System.out.print("Digite a especialidade do professor: ");
-        String especialidade = leia.nextLine();
+        System.out.print("Digite a modalidade do professor: ");
+        String modalidade = leia.nextLine();
 
         Professor novoProfessor = new Professor(
                 nome,
@@ -316,7 +324,7 @@ public class Main {
                 telefone,
                 senha,
                 dataNascimento,
-                especialidade);
+                modalidade);
 
         professores.add(novoProfessor);
         ProfessorCSV.salvar(novoProfessor);
@@ -558,5 +566,9 @@ public class Main {
                     System.out.println("Opção inválida.");
             }
         }
+    }
+
+    static void menuProfessor(Professor professor) {
+        System.out.println("Funcionalidade de professor a implementar...");
     }
 }

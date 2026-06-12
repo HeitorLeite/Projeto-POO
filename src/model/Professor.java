@@ -7,13 +7,13 @@ import java.time.Period;
 public class Professor extends Usuario implements Persistivel {
 
     private LocalDate dataNascimento;
-    private String especialidade;
+    private String modalidade;
 
     public Professor(String nome, String cpf, String email, String telefone, String senha, LocalDate dataNascimento,
-            String especialidade) {
+            String modalidade) {
         super(nome, cpf, email, telefone, senha);
         this.dataNascimento = dataNascimento;
-        this.especialidade = especialidade;
+        this.modalidade = modalidade;
     }
 
     @Override
@@ -23,7 +23,7 @@ public class Professor extends Usuario implements Persistivel {
         System.out.println("CPF         : " + getCpf());
         System.out.println("Email       : " + getEmail());
         System.out.println("Idade       : " + getIdade() + " anos");
-        System.out.println("Especialidade: " + getEspecialidade());
+        System.out.println("modalidade: " + getmodalidade());
         System.out.println("========================================");
     }
 
@@ -35,8 +35,8 @@ public class Professor extends Usuario implements Persistivel {
         return Period.between(dataNascimento, LocalDate.now()).getYears();
     }
 
-    public String getEspecialidade() {
-        return especialidade;
+    public String getmodalidade() {
+        return modalidade;
     }
 
     @Override
@@ -48,11 +48,11 @@ public class Professor extends Usuario implements Persistivel {
                 + getSenha() + ","
                 + "PROFESSOR" + ","
                 + dataNascimento + ","
-                + especialidade;
+                + modalidade;
     }
 
     @Override
     public String getCabecalhoCSV() {
-        return "nome,cPF,email,telefone,senha,tipo,dataNascimento,especialidade";
+        return "nome,cPF,email,telefone,senha,tipo,dataNascimento,modalidade";
     }
 }
