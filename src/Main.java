@@ -18,6 +18,7 @@ import service.AlunoCSV;
 import service.InscricaoService;
 import service.ModalidadeCSV;
 import service.ProfessorCSV;
+import service.TurmaCSV;
 
 public class Main {
 
@@ -35,6 +36,7 @@ public class Main {
         administradores = AdminCSV.carregar();
         professores = ProfessorCSV.carregar();
         modalidades = ModalidadeCSV.carregar();
+        turmas      = TurmaCSV.carregar(modalidades);
         menuEntrada();
     }
 
