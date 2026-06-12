@@ -77,11 +77,11 @@ public class Turma implements Persistivel {
         return listaEspera;
     }
 
-    public void adicionarProfessor(Professor professor) {
+    public void setProfessor(Professor professor) {
         professoresResponsaveis.add(professor);
     }
 
-    public void removerProfessor(Professor professor) {
+    public void removeProfessor(Professor professor) {
         professoresResponsaveis.remove(professor);
     }
 
