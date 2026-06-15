@@ -16,7 +16,7 @@ public class Turma implements Persistivel {
 
     private List<Aluno> alunosInscritos;
     private Queue<Aluno> listaEspera;
-    private List<Professor> professoresResponsaveis; 
+    private List<Professor> professoresResponsaveis;
 
     public Turma(String nome, Modalidade modalidade, String horario, int limiteAlunos) {
         this.nome = nome;
@@ -91,11 +91,15 @@ public class Turma implements Persistivel {
 
     @Override
     public String paraCSV() {
+        String cpfsProfessores = professoresResponsaveis.stream()
+                .map(Professor::getCpf)
+                .collect(java.util.stream.Collectors.joining(";"));
+
         return nome + ","
                 + modalidade.getNome() + ","
                 + horario + ","
                 + limiteAlunos + ","
-                + professoresResponsaveis + ","
+                + cpfsProfessores + ","
                 + ativo;
     }
 

@@ -391,7 +391,8 @@ public class Main {
 
         } while (opcaoModalidade < 1 || opcaoModalidade > modalidades.size());
 
-        // Colocar para se a modalidade não existir aparecer a opção de cadastrar nova modalidade
+        // Colocar para se a modalidade não existir aparecer a opção de cadastrar nova
+        // modalidade
 
         Modalidade modalidadeSelecionada = modalidades.get(opcaoModalidade - 1);
 
@@ -569,8 +570,59 @@ public class Main {
         ModalidadeCSV.salvar(novaModalidade);
     }
 
-    static void verTurmas(Professor professor){
-        
+    static void verTurmas(Professor professor) {
+        System.out.println("\n===== MINHAS TURMAS =====");
+
+        boolean encontrou = false;
+        int opcao = -1;
+
+        for (Turma t : turmas) {
+            for (Professor p : t.getProfessoresResponsaveis()) {
+                if (p.getCpf().equals(professor.getCpf())) {
+                    int vagasLivres = t.getLimiteAlunos() - t.getAlunosInscritos().size();
+                    System.out.printf("• %s | Modalidade: %s | Horário: %s | Alunos: %d/%d%n",
+                            t.getNome(),
+                            t.getModalidade().getNome(),
+                            t.getHorario(),
+                            t.getAlunosInscritos().size(),
+                            t.getLimiteAlunos());
+                    encontrou = true;
+                    break; // evita exibir a mesma turma duas vezes se o professor aparecer duplicado
+                }
+            }
+        }
+
+        if (!encontrou) {
+            System.out.println("Você não está responsável por nenhuma turma.");
+        }
+
+        while(opcao != 0){
+                System.out.println("\n1. Ver alunos de uma turma");
+                System.out.println("2. Registrar falta");
+                System.out.println("0. Voltar");
+                System.out.print("Escolha: ");
+                opcao = leia.nextInt();
+                leia.nextLine();
+    
+                switch (opcao) {
+                    case 1:
+                        // verAlunosDaTurma(professor);
+                        break;
+    
+                    case 2:
+                        // registrarFaltaProfessor(professor);
+                        break;
+    
+                    case 0:
+                        System.out.println("Voltando ao menu anterior...");
+                        break;
+    
+                    default:
+                        System.out.println("Opção inválida.");
+                }
+        }
+
+        System.out.println("=========================");
     }
 
     static void menuAluno(Aluno aluno) {
@@ -699,7 +751,7 @@ public class Main {
         }
     }
 
-  static void menuProfessor(Professor professor) {
+    static void menuProfessor(Professor professor) {
 
         int opcao = -1;
 
