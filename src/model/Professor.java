@@ -23,7 +23,7 @@ public class Professor extends Usuario implements Persistivel {
         System.out.println("CPF         : " + getCpf());
         System.out.println("Email       : " + getEmail());
         System.out.println("Idade       : " + getIdade() + " anos");
-        System.out.println("modalidade: " + getmodalidade());
+        System.out.println("modalidade: " + getModalidade());
         System.out.println("========================================");
     }
 
@@ -35,7 +35,7 @@ public class Professor extends Usuario implements Persistivel {
         return Period.between(dataNascimento, LocalDate.now()).getYears();
     }
 
-    public String getmodalidade() {
+    public String getModalidade() {
         return modalidade;
     }
 

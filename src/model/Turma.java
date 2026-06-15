@@ -1,11 +1,12 @@
 package model;
 
+import interfaces.Persistivel;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
 
-public class Turma{
+public class Turma implements Persistivel {
 
     private String nome;
     private Modalidade modalidade;
@@ -15,18 +16,20 @@ public class Turma{
 
     private List<Aluno> alunosInscritos;
     private Queue<Aluno> listaEspera;
+    private List<Professor> professoresResponsaveis; 
 
-    public Turma(String nome, Modalidade modalidade, String horario, int limiteAlunos){
-        this.nome            = nome;
-        this.modalidade      = modalidade;
-        this.horario         = horario;
-        this.limiteAlunos    = limiteAlunos;
-        this.ativo           = true;
+    public Turma(String nome, Modalidade modalidade, String horario, int limiteAlunos) {
+        this.nome = nome;
+        this.modalidade = modalidade;
+        this.horario = horario;
+        this.limiteAlunos = limiteAlunos;
+        this.ativo = true;
         this.alunosInscritos = new ArrayList<>();
-        this.listaEspera     = new LinkedList<>();
+        this.listaEspera = new LinkedList<>();
+        this.professoresResponsaveis = new ArrayList<>(); // <-- novo
     }
 
-     public boolean temVaga() {
+    public boolean temVaga() {
         return alunosInscritos.size() < limiteAlunos;
     }
 
@@ -46,11 +49,58 @@ public class Turma{
         this.ativo = false;
     }
 
-    public String     getNome()           { return nome; }
-    public Modalidade getModalidade()     { return modalidade; }
-    public String     getHorario()        { return horario; }
-    public int        getLimiteAlunos()   { return limiteAlunos; }
-    public boolean    isAtivo()           { return ativo; }
-    public List<Aluno> getAlunosInscritos() { return alunosInscritos; }
-    public Queue<Aluno> getListaEspera()  { return listaEspera; }
+    public String getNome() {
+        return nome;
+    }
+
+    public Modalidade getModalidade() {
+        return modalidade;
+    }
+
+    public String getHorario() {
+        return horario;
+    }
+
+    public int getLimiteAlunos() {
+        return limiteAlunos;
+    }
+
+    public boolean isAtivo() {
+        return ativo;
+    }
+
+    public List<Aluno> getAlunosInscritos() {
+        return alunosInscritos;
+    }
+
+    public Queue<Aluno> getListaEspera() {
+        return listaEspera;
+    }
+
+    public void setProfessor(Professor professor) {
+        professoresResponsaveis.add(professor);
+    }
+
+    public void removeProfessor(Professor professor) {
+        professoresResponsaveis.remove(professor);
+    }
+
+    public List<Professor> getProfessoresResponsaveis() {
+        return professoresResponsaveis;
+    }
+
+    @Override
+    public String paraCSV() {
+        return nome + ","
+                + modalidade.getNome() + ","
+                + horario + ","
+                + limiteAlunos + ","
+                + professoresResponsaveis + ","
+                + ativo;
+    }
+
+    @Override
+    public String getCabecalhoCSV() {
+        return "nome,modalidade,horario,limiteAlunos,professoresResponsaveis,ativo";
+    }
 }
