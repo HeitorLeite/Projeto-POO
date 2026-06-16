@@ -22,7 +22,7 @@ public class Inscricao {
     public void registrarFalta() {
         faltasMes++;
         if (faltasMes == 2) {
-            aluno.notificar("Você já tem 2 faltas em " + turma.getNome() + ". Cuidado com o cancelamento!");
+            aluno.notificar("Voce ja tem 2 faltas em " + turma.getNome() + ". Cuidado com o cancelamento!");
         }
     }
 

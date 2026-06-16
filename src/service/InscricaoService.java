@@ -37,7 +37,7 @@ public class InscricaoService {
         aluno.incrementarInscricoes();
 
         Inscricao inscricao = new Inscricao(aluno, turma);
-        aluno.notificar("Inscrição confirmada na turma " + turma.getNome() + "!");
+        aluno.notificar("Inscricao confirmada na turma " + turma.getNome() + "!");
 
         return inscricao;
     }

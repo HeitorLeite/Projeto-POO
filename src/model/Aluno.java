@@ -34,7 +34,7 @@ public class Aluno extends Usuario implements Persistivel {
 
         // S? mostra respons?vel se for menor de 18 (RN007)
         if (ehMenorDeIdade()) {
-            System.out.println("Respons?vel : " + responsavelNome);
+            System.out.println("Responsavel : " + responsavelNome);
             System.out.println("Telefone    : " + responsavelTelefone);
         }
 

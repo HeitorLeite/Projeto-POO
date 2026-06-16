@@ -26,7 +26,7 @@ public abstract class Usuario implements Notificavel {
 
     @Override
     public void notificar(String mensagem) {
-        System.out.println("[NOTIFICA??O para " + nome + "] " + mensagem);
+        System.out.println("[NOTIFICACAO para " + nome + "] " + mensagem);
     }
 
 

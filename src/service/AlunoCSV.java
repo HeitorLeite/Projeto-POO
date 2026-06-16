@@ -35,7 +35,7 @@ public class AlunoCSV {
                 String[] dados = linha.split(",");
 
                 if (dados.length < 6) {
-                    System.out.println("Linha inv?lida ignorada: " + linha);
+                    System.out.println("Linha invalida ignorada: " + linha);
                     continue;
                 }
 
@@ -63,7 +63,7 @@ public class AlunoCSV {
             }
 
         } catch (IOException e) {
-            System.out.println("Arquivo CSV ainda n?o existe.");
+            System.out.println("Arquivo CSV ainda nao existe.");
         }
 
         return alunos;

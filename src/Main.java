@@ -1,3 +1,4 @@
+
 import enums.StatusInscricao;
 import exceptions.IdadeIncompativel;
 import exceptions.LimiteModalidades;
@@ -32,6 +33,7 @@ public class Main {
     static List<Professor> professores = new ArrayList<>();
 
     public static void main(String[] args) {
+        System.out.println("Diretorio atual: " + System.getProperty("user.dir"));
         alunos = AlunoCSV.carregar();
         administradores = AdminCSV.carregar();
         professores = ProfessorCSV.carregar();
@@ -126,7 +128,7 @@ public class Main {
 
         } catch (Exception erro) {
             System.out.println("Formato errado!");
-            System.out.println("Usando data padr?o (hoje).");
+            System.out.println("Usando data padrao (hoje).");
             dataNascimento = LocalDate.now();
         }
 
@@ -204,7 +206,7 @@ public class Main {
 
         } catch (Exception erro) {
             System.out.println("Formato errado!");
-            System.out.println("Usando data padr?o (hoje).");
+            System.out.println("Usando data padrao (hoje).");
             dataNascimento = LocalDate.now();
         }
 
@@ -323,12 +325,12 @@ public class Main {
 
         int escolha = -1;
         while (escolha < 1 || escolha > modalidades.size()) {
-            System.out.print("Escolha o número da modalidade: ");
+            System.out.print("Escolha o numero da modalidade: ");
             escolha = leia.nextInt();
             leia.nextLine();
 
             if (escolha < 1 || escolha > modalidades.size()) {
-                System.out.println("Opção inválida! Tente novamente.");
+                System.out.println("Opção invalida! Tente novamente.");
             }
         }
 
@@ -367,19 +369,19 @@ public class Main {
         System.out.print("Nome da turma: ");
         String nomeTurma = leia.nextLine();
 
-        System.out.print("Horário da turma (seg/ter 18h): ");
+        System.out.print("Horario da turma (seg/ter 18h): ");
         String horario = leia.nextLine();
 
         System.out.print("Limite de alunos: ");
         int limiteAlunos = leia.nextInt();
         leia.nextLine();
 
-        System.out.println("\nModalidades disponíveis:");
+        System.out.println("\nModalidades disponiveis:");
 
         for (int i = 0; i < modalidades.size(); i++) {
             System.out.println(
-                    (i + 1) + " - " +
-                            modalidades.get(i).getNome());
+                    (i + 1) + " - "
+                    + modalidades.get(i).getNome());
         }
 
         int opcaoModalidade;
@@ -393,26 +395,25 @@ public class Main {
 
         // Colocar para se a modalidade não existir aparecer a opção de cadastrar nova
         // modalidade
-
         Modalidade modalidadeSelecionada = modalidades.get(opcaoModalidade - 1);
 
-        System.out.println("\nProfessores disponíveis:");
+        System.out.println("\nProfessores disponiveis:");
 
         for (int i = 0; i < professores.size(); i++) {
 
             Professor p = professores.get(i);
 
             System.out.println(
-                    (i + 1) + " - " +
-                            p.getNome() +
-                            " | Modalidade: " +
-                            p.getModalidade());
+                    (i + 1) + " - "
+                    + p.getNome()
+                    + " | Modalidade: "
+                    + p.getModalidade());
         }
 
         int opcaoProfessor;
 
         do {
-            System.out.print("Escolha o professor responsável: ");
+            System.out.print("Escolha o professor responsavel: ");
             opcaoProfessor = leia.nextInt();
             leia.nextLine();
 
@@ -435,18 +436,18 @@ public class Main {
         System.out.println("\nTurma cadastrada com sucesso!");
         System.out.println("Turma: " + nomeTurma);
         System.out.println("Modalidade: " + modalidadeSelecionada.getNome());
-        System.out.println("Professor responsável: " + professorSelecionado.getNome());
+        System.out.println("Professor responsavel: " + professorSelecionado.getNome());
     }
 
     static void verModalidades() {
-        System.out.println("\n===== MODALIDADES DISPONÍVEIS =====");
+        System.out.println("\n===== MODALIDADES DISPONIVEIS =====");
         if (turmas.isEmpty()) {
             System.out.println("Nenhuma turma cadastrada.");
             return;
         }
         for (Turma t : turmas) {
             int vagasLivres = t.getLimiteAlunos() - t.getAlunosInscritos().size();
-            System.out.printf("• %s | Modalidade: %s | Horário: %s | Vagas livres: %d/%d%n",
+            System.out.printf("Turma: %s | Modalidade: %s | Horário: %s | Vagas livres: %d/%d%n",
                     t.getNome(),
                     t.getModalidade().getNome(),
                     t.getHorario(),
@@ -458,11 +459,11 @@ public class Main {
 
     static void realizarInscricao(Aluno aluno) {
         if (turmas.isEmpty()) {
-            System.out.println("Nenhuma turma disponível no momento.");
+            System.out.println("Nenhuma turma disponivel no momento.");
             return;
         }
 
-        System.out.println("\n===== TURMAS DISPONÍVEIS =====");
+        System.out.println("\n===== TURMAS DISPONIVEIS =====");
         for (int i = 0; i < turmas.size(); i++) {
             Turma t = turmas.get(i);
             System.out.printf("[%d] %s | %s | Horário: %s | Vagas: %d/%d%n",
@@ -474,12 +475,12 @@ public class Main {
                     t.getLimiteAlunos());
         }
 
-        System.out.print("Escolha o número da turma: ");
+        System.out.print("Escolha o numero da turma: ");
         int escolha = leia.nextInt();
         leia.nextLine();
 
         if (escolha < 1 || escolha > turmas.size()) {
-            System.out.println("Opção inválida.");
+            System.out.println("Opção invalida.");
             return;
         }
 
@@ -502,7 +503,7 @@ public class Main {
     }
 
     static void verInscricoes(Aluno aluno) {
-        System.out.println("\n===== MINHAS INSCRIÇÕES =====");
+        System.out.println("\n===== MINHAS INSCRICOEES =====");
         boolean encontrou = false;
         for (Inscricao i : inscricoes) {
             if (i.getAluno().getCpf().equals(aluno.getCpf())) {
@@ -514,19 +515,19 @@ public class Main {
             }
         }
         if (!encontrou) {
-            System.out.println("Você não possui inscrições.");
+            System.out.println("Voce não possui inscricoes.");
         }
         System.out.println("=============================");
     }
 
     static void verFrequencia(Aluno aluno) {
-        System.out.println("\n===== MINHA FREQUÊNCIA =====");
+        System.out.println("\n===== MINHA FREQUENCIA =====");
         boolean encontrou = false;
         for (Inscricao i : inscricoes) {
             if (i.getAluno().getCpf().equals(aluno.getCpf())
                     && i.getStatus() == StatusInscricao.ATIVA) {
                 int limiteFaltas = i.getTurma().getModalidade().getLimiteFaltasMensais();
-                System.out.printf("• %s | Faltas no mês: %d/%d%n",
+                System.out.printf("• %s | Faltas no mes: %d/%d%n",
                         i.getTurma().getNome(),
                         i.getFaltasMes(),
                         limiteFaltas);
@@ -534,7 +535,7 @@ public class Main {
             }
         }
         if (!encontrou) {
-            System.out.println("Nenhuma inscrição ativa encontrada.");
+            System.out.println("Nenhuma inscricao ativa encontrada.");
         }
         System.out.println("============================");
     }
@@ -555,10 +556,10 @@ public class Main {
         System.out.print("Digite o nome da modalidade: ");
         String nome = leia.nextLine();
 
-        System.out.print("Digite a idade mínima: ");
+        System.out.print("Digite a idade minima: ");
         int idadeMinima = leia.nextInt();
 
-        System.out.print("Digite a idade máxima: ");
+        System.out.print("Digite a idade maxima: ");
         int idadeMaxima = leia.nextInt();
 
         System.out.print("Digite o limite de faltas mensais: ");
@@ -580,7 +581,7 @@ public class Main {
             for (Professor p : t.getProfessoresResponsaveis()) {
                 if (p.getCpf().equals(professor.getCpf())) {
                     int vagasLivres = t.getLimiteAlunos() - t.getAlunosInscritos().size();
-                    System.out.printf("• %s | Modalidade: %s | Horário: %s | Alunos: %d/%d%n",
+                    System.out.printf("Turma: %s | Modalidade: %s | Horario: %s | Alunos: %d/%d%n",
                             t.getNome(),
                             t.getModalidade().getNome(),
                             t.getHorario(),
@@ -593,33 +594,33 @@ public class Main {
         }
 
         if (!encontrou) {
-            System.out.println("Você não está responsável por nenhuma turma.");
+            System.out.println("Voce não está responsavel por nenhuma turma.");
         }
 
-        while(opcao != 0){
-                System.out.println("\n1. Ver alunos de uma turma");
-                System.out.println("2. Registrar falta");
-                System.out.println("0. Voltar");
-                System.out.print("Escolha: ");
-                opcao = leia.nextInt();
-                leia.nextLine();
+        while (opcao != 0) {
+            System.out.println("\n1. Ver alunos de uma turma");
+            System.out.println("2. Registrar falta");
+            System.out.println("0. Voltar");
+            System.out.print("Escolha: ");
+            opcao = leia.nextInt();
+            leia.nextLine();
+
+            switch (opcao) {
+                case 1:
+                    professor.verAlunosDaTurma(professor, turmas);
+                    break;
     
-                switch (opcao) {
-                    case 1:
-                        // verAlunosDaTurma(professor);
-                        break;
-    
-                    case 2:
-                        // registrarFaltaProfessor(professor);
-                        break;
-    
-                    case 0:
-                        System.out.println("Voltando ao menu anterior...");
-                        break;
-    
-                    default:
-                        System.out.println("Opção inválida.");
-                }
+                case 2:
+                    professor.registrarFaltaProfessor(professor, turmas, leia);
+                    break;
+
+                case 0:
+                    System.out.println("Voltando ao menu anterior...");
+                    break;
+
+                default:
+                    System.out.println("Opção invalida.");
+            }
         }
 
         System.out.println("=========================");
@@ -634,7 +635,7 @@ public class Main {
             System.out.println("  Logado: " + aluno.getNome());
             System.out.println("");
             System.out.println("  1. Ver meu perfil               ");
-            System.out.println("  2. Ver modalidades dispon?veis  ");
+            System.out.println("  2. Ver modalidades disponiveis  ");
             System.out.println("  3. Realizar inscricao           ");
             System.out.println("  4. Ver minhas inscricoes        ");
             System.out.println("  5. Ver minha frequencia         ");
@@ -670,7 +671,7 @@ public class Main {
                     break;
 
                 default:
-                    System.out.println("Op??o inv?lida!");
+                    System.out.println("Opcao invalida!");
             }
         }
     }
@@ -746,7 +747,7 @@ public class Main {
                     break;
 
                 default:
-                    System.out.println("Opção inválida.");
+                    System.out.println("Opcao invalida.");
             }
         }
     }
@@ -780,11 +781,11 @@ public class Main {
                     break;
 
                 case 3:
-                    // verAlunosDaTurma(professor);
+                    professor.verAlunosDaTurma(professor, turmas);
                     break;
 
                 case 4:
-                    // registrarFaltaProfessor(professor);
+                    professor.registrarFaltaProfessor(professor, turmas, leia);
                     break;
 
                 case 0:

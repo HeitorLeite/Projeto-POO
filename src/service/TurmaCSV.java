@@ -38,7 +38,7 @@ public class TurmaCSV {
                 String[] dados = linha.split(",");
 
                 if (dados.length < 4) {
-                    System.out.println("Linha inválida ignorada: " + linha);
+                    System.out.println("Linha invalida ignorada: " + linha);
                     continue;
                 }
 
@@ -67,7 +67,7 @@ public class TurmaCSV {
                 if (modalidade == null) {
                     System.out.println(
                             "Modalidade '" + nomeModalidade
-                                    + "' não encontrada para a turma '"
+                                    + "' nao encontrada para a turma '"
                                     + nomeTurma + "'.");
                     continue;
                 }
@@ -105,7 +105,7 @@ public class TurmaCSV {
             }
 
         } catch (IOException e) {
-            System.out.println("Arquivo CSV de turmas ainda não existe.");
+            System.out.println("Arquivo CSV de turmas ainda nao existe.");
         }
 
         return turmas;

@@ -31,7 +31,7 @@ public class Admin extends Usuario implements Persistivel {
         System.out.println("====================================");
 
         if (permissao == 0) {
-            System.out.println("Você não tem permissão para acessar as funcionalidades administrativas.");
+            System.out.println("Voce nao tem permissao para acessar as funcionalidades administrativas.");
             return;
         }
 

@@ -31,7 +31,7 @@ public class ModalidadeCSV {
                 String[] dados = linha.split(",");
 
                 if (dados.length < 4) {
-                    System.out.println("Linha inválida ignorada: " + linha);
+                    System.out.println("Linha invalida ignorada: " + linha);
                     continue;
                 }
 
@@ -51,7 +51,7 @@ public class ModalidadeCSV {
             }
 
         } catch (IOException e) {
-            System.out.println("Arquivo CSV de modalidades ainda não existe.");
+            System.out.println("Arquivo CSV de modalidades ainda nao existe.");
         }
 
         return modalidades;
