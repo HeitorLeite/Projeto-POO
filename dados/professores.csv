@@ -1,3 +1,2 @@
-Joao,1234567,joao@email.com,12427347,joao123,PROFESSOR,2000-12-12,Futebol
-livia andrade,123,livia@gmail.com,123,123,PROFESSOR,2006-07-04,Futebol
-joao,1234,joao@gmail.com,123456789,123456,PROFESSOR,2006-06-21,Futebol
+nome,cpf,email,telefone,senha,tipo,dataNascimento,modalidade,registro,especialidade
+Jose,12345,jose@email.com,1293623,jose123,PROFESSOR,2002-05-09,Futebol,12512,Educacao Fisica

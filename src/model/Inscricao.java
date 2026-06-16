@@ -1,9 +1,10 @@
 package model;
 
 import enums.StatusInscricao;
+import interfaces.Persistivel;
 import java.time.LocalDate;
 
-public class Inscricao {
+public class Inscricao implements Persistivel {
 
     private Aluno          aluno;
     private Turma          turma;
@@ -19,6 +20,14 @@ public class Inscricao {
         this.faltasMes     = 0;
     }
 
+    public Inscricao(Aluno aluno, Turma turma, StatusInscricao status, LocalDate dataInscricao, int faltasMes) {
+        this.aluno         = aluno;
+        this.turma         = turma;
+        this.status        = status;
+        this.dataInscricao = dataInscricao;
+        this.faltasMes     = faltasMes;
+    }
+
     public void registrarFalta() {
         faltasMes++;
         if (faltasMes == 2) {
@@ -28,6 +37,12 @@ public class Inscricao {
 
     public boolean ultrapassouLimiteFaltas() {
         return faltasMes > turma.getModalidade().getLimiteFaltasMensais();
+    }
+
+    public void descontarFaltaJustificada() {
+        if (faltasMes > 0) {
+            faltasMes--;
+        }
     }
 
     public void cancelar() {
@@ -43,4 +58,18 @@ public class Inscricao {
     public StatusInscricao getStatus()        { return status; }
     public LocalDate       getDataInscricao() { return dataInscricao; }
     public int             getFaltasMes()     { return faltasMes; }
+
+    @Override
+    public String paraCSV() {
+        return aluno.getCpf() + ","
+                + turma.getNome() + ","
+                + status + ","
+                + dataInscricao + ","
+                + faltasMes;
+    }
+
+    @Override
+    public String getCabecalhoCSV() {
+        return "alunoCpf,turmaNome,status,dataInscricao,faltasMes";
+    }
 }

@@ -1,10 +1,9 @@
 package model;
 
-import interfaces.Persistivel;
 import java.time.LocalDate;
 import java.time.Period;
 
-public class Aluno extends Usuario implements Persistivel {
+public class Aluno extends Usuario {
 
     private LocalDate dataNascimento;
     private String responsavelNome;
@@ -32,7 +31,6 @@ public class Aluno extends Usuario implements Persistivel {
         System.out.println("Idade       : " + getIdade() + " anos");
         System.out.println("Inscricoes  : " + totalInscricoes + "/2");
 
-        // S? mostra respons?vel se for menor de 18 (RN007)
         if (ehMenorDeIdade()) {
             System.out.println("Responsavel : " + responsavelNome);
             System.out.println("Telefone    : " + responsavelTelefone);
@@ -45,7 +43,8 @@ public class Aluno extends Usuario implements Persistivel {
     public void notificar(String mensagem) {
         super.notificar(mensagem);
 
-        if (ehMenorDeIdade() && !responsavelTelefone.isEmpty()) {
+        if (ehMenorDeIdade() && responsavelTelefone != null && !responsavelTelefone.equals("-")
+                && !responsavelTelefone.isBlank()) {
             System.out.println(
                     "[AVISO AO RESPONSAVEL - " + responsavelNome + " | " + responsavelTelefone + "] " + mensagem);
         }
@@ -55,7 +54,6 @@ public class Aluno extends Usuario implements Persistivel {
         return Period.between(dataNascimento, LocalDate.now()).getYears();
     }
 
-    // Retorna true se tiver menos de 18 anos
     public boolean ehMenorDeIdade() {
         return getIdade() < 18;
     }
@@ -107,5 +105,4 @@ public class Aluno extends Usuario implements Persistivel {
     public int getTotalInscricoes() {
         return totalInscricoes;
     }
-
 }

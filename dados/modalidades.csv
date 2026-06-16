@@ -1,1 +1,2 @@
-Futebol,5,80,2,true
+nome,idadeMinima,idadeMaxima,limiteFaltasMensais,ativo
+Futebol,5,21,2,true

@@ -20,9 +20,9 @@ public class Modalidade implements Persistivel {
     public void exibirModalidade() {
         System.out.println("\n========== MODALIDADE ==========");
         System.out.println("Nome                : " + nome);
-        System.out.println("Idade Minima       : " + idadeMinima + " anos");
-        System.out.println("Idade Maxima       : " + idadeMaxima + " anos");
-        System.out.println("Limite Faltas/Mes  : " + limiteFaltasMensais);
+        System.out.println("Idade Minima        : " + idadeMinima + " anos");
+        System.out.println("Idade Maxima        : " + idadeMaxima + " anos");
+        System.out.println("Limite Faltas/Mes   : " + limiteFaltasMensais);
         System.out.println("Status              : " + (ativo ? "Ativa" : "Inativa"));
         System.out.println("================================");
     }

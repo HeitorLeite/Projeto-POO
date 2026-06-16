@@ -1,8 +1,9 @@
 package model;
 
 import interfaces.Notificavel;
+import interfaces.Persistivel;
 
-public abstract class Usuario implements Notificavel {
+public abstract class Usuario implements Notificavel, Persistivel {
 
     private String nome;
     private String cpf;
@@ -18,7 +19,13 @@ public abstract class Usuario implements Notificavel {
         this.senha = senha;
     }
 
-     public abstract void exibirPerfil();
+    public abstract void exibirPerfil();
+
+    @Override
+    public abstract String paraCSV();
+
+    @Override
+    public abstract String getCabecalhoCSV();
 
     public boolean autenticar(String cpfDigitado, String senhaDigitada) {
         return this.cpf.equals(cpfDigitado) && this.senha.equals(senhaDigitada);
@@ -29,9 +36,13 @@ public abstract class Usuario implements Notificavel {
         System.out.println("[NOTIFICACAO para " + nome + "] " + mensagem);
     }
 
+    @Override
+    public String getContatoNotificacao() {
+        return telefone;
+    }
 
-    public String getNome()  { return nome; }
-    public String getCpf()   { return cpf; }
+    public String getNome() { return nome; }
+    public String getCpf() { return cpf; }
     public String getEmail() { return email; }
     public String getTelefone() { return telefone; }
     public String getSenha() { return senha; }
@@ -39,5 +50,4 @@ public abstract class Usuario implements Notificavel {
     public void setEmail(String email) { this.email = email; }
     public void setSenha(String senha) { this.senha = senha; }
     public void setTelefone(String telefone) { this.telefone = telefone; }
-
 }

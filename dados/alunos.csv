@@ -1,5 +1,2 @@
-Joao,123456789,joao@email.com,1299675684,joao123,ALUNO,2020-05-04,Jose,124295295
-Heitor Leite,47137716865,heitor@email.com,12996453457,heitor28,ALUNO,2006-07-28,-,-
-Maria,12345678910,maria@email.com,123456,maria123,ALUNO,2005-06-27,-,-
-Lucas,12345,lucas@email.com,12345,lucas123,ALUNO,2006-08-25,-,-
-micael philippini,52162369933,phimicalcae@gmail.com,129200202025,123,ALUNO,2026-06-12,-,-
+nome,cpf,email,telefone,senha,tipo,dataNascimento,responsavelNome,responsavelTelefone
+Livia Andrade,1234567,livia@email.com,1291956296,livia123,ALUNO,2006-05-14,-,-

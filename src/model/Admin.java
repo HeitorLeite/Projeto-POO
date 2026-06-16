@@ -1,41 +1,42 @@
 package model;
 
-import interfaces.Persistivel;
+import enums.NivelAcesso;
 import java.time.LocalDate;
 import java.time.Period;
 
-public class Admin extends Usuario implements Persistivel {
+public class Admin extends Usuario {
 
     private LocalDate dataNascimento;
     private String setor;
-    private byte permissao;
+    private NivelAcesso nivelAcesso;
 
     public Admin(String nome, String cpf, String email, String telefone, String senha, LocalDate dataNascimento,
-            String setor, byte permissao) {
+            String setor, NivelAcesso nivelAcesso) {
         super(nome, cpf, email, telefone, senha);
 
         this.dataNascimento = dataNascimento;
         this.setor = setor;
-        this.permissao = permissao;
+        this.nivelAcesso = nivelAcesso;
     }
 
     @Override
     public void exibirPerfil() {
         System.out.println("\n========== PERFIL DO ADMIN ==========");
-        System.out.println("Nome   : " + getNome());
-        System.out.println("CPF    : " + getCpf());
-        System.out.println("Email  : " + getEmail());
-        System.out.println("Idade  : " + getIdade() + " anos");
-        System.out.println("Setor  : " + getSetor());
-        System.out.println("Permissao  : " + getPermissao());
-        System.out.println("====================================");
-
-        if (permissao == 0) {
-            System.out.println("Voce nao tem permissao para acessar as funcionalidades administrativas.");
-            return;
-        }
-
+        System.out.println("Nome       : " + getNome());
+        System.out.println("CPF        : " + getCpf());
+        System.out.println("Email      : " + getEmail());
+        System.out.println("Idade      : " + getIdade() + " anos");
+        System.out.println("Setor      : " + getSetor());
+        System.out.println("Nivel      : " + nivelAcesso + " (" + nivelAcesso.getDescricao() + ")");
         System.out.println("======================================");
+
+        if (!temAcessoTotal()) {
+            System.out.println("Atencao: este administrador tem apenas acesso PARCIAL.");
+        }
+    }
+
+    public boolean temAcessoTotal() {
+        return nivelAcesso == NivelAcesso.TOTAL;
     }
 
     public LocalDate getDataNascimento() {
@@ -50,8 +51,8 @@ public class Admin extends Usuario implements Persistivel {
         return setor;
     }
 
-    public byte getPermissao() {
-        return permissao;
+    public NivelAcesso getNivelAcesso() {
+        return nivelAcesso;
     }
 
     @Override
@@ -64,11 +65,11 @@ public class Admin extends Usuario implements Persistivel {
                 + "ADMIN" + ","
                 + dataNascimento + ","
                 + setor + ","
-                + permissao;
+                + nivelAcesso;
     }
 
     @Override
     public String getCabecalhoCSV() {
-        return "nome,cpf,email,telefone,senha,tipo,dataNascimento,setor,permissao";
+        return "nome,cpf,email,telefone,senha,tipo,dataNascimento,setor,nivelAcesso";
     }
 }

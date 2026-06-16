@@ -10,6 +10,7 @@ public class Turma implements Persistivel {
 
     private String nome;
     private Modalidade modalidade;
+    private Polo polo;
     private String horario;
     private int limiteAlunos;
     private boolean ativo;
@@ -18,15 +19,16 @@ public class Turma implements Persistivel {
     private Queue<Aluno> listaEspera;
     private List<Professor> professoresResponsaveis;
 
-    public Turma(String nome, Modalidade modalidade, String horario, int limiteAlunos) {
+    public Turma(String nome, Modalidade modalidade, Polo polo, String horario, int limiteAlunos) {
         this.nome = nome;
         this.modalidade = modalidade;
+        this.polo = polo;
         this.horario = horario;
         this.limiteAlunos = limiteAlunos;
         this.ativo = true;
         this.alunosInscritos = new ArrayList<>();
         this.listaEspera = new LinkedList<>();
-        this.professoresResponsaveis = new ArrayList<>(); // <-- novo
+        this.professoresResponsaveis = new ArrayList<>();
     }
 
     public boolean temVaga() {
@@ -55,6 +57,10 @@ public class Turma implements Persistivel {
 
     public Modalidade getModalidade() {
         return modalidade;
+    }
+
+    public Polo getPolo() {
+        return polo;
     }
 
     public String getHorario() {
@@ -100,11 +106,12 @@ public class Turma implements Persistivel {
                 + horario + ","
                 + limiteAlunos + ","
                 + cpfsProfessores + ","
+                + (polo != null ? polo.getNome() : "-") + ","
                 + ativo;
     }
 
     @Override
     public String getCabecalhoCSV() {
-        return "nome,modalidade,horario,limiteAlunos,professoresResponsaveis,ativo";
+        return "nome,modalidade,horario,limiteAlunos,professoresResponsaveis,polo,ativo";
     }
 }

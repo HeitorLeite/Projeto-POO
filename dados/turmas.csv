@@ -1,2 +1,2 @@
-Escolinha de Futebol,Futebol,seg/sexta 15h,30,1234567,true
-turma A,Futebol,sexta 16h,21,1234,true
+nome,modalidade,horario,limiteAlunos,professoresResponsaveis,polo,ativo
+Escola de Futebol,Futebol,15h,20,12345,Quadra de Esportes,true
